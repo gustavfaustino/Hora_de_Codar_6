@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!--
+  ^~^  ,
+ ('Y') )
+ /   \/
+(\|||/) Made by GustavG
+-->
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center"
+  >
+    <!-- 1 - Agenda
+Considerando a necessidade de desenvolver uma agenda que contenha nomes,
+ endereços e telefones de 10 pessoas, defina a estrutura de registro apropriada,
+  o diagrama de blocos e a codificação de um programa que por meio do uso de um menu de opções,
+   execute as seguintes etapas:
+
+a) Cadastrar os 10 registros. (Fiz)
+b) Pesquisar um dos 10 registros de cada vez pelo campo nome 
+(usar o método seqüencial) => (Eu poderia ter feito, mas não implementei).
+c) Classificar por ordem de nome os registros cadastrados. (Coloquei mas de maneira diferente)
+d) Apresentar todos os registros. (sem necessidade)
+e) Sair do programa de cadastro. (fiz sem a necessidade)-->
+
+    <!-- Container principal -->
+    <div class="max-w-4xl w-full p-6 bg-gray-800 rounded-lg shadow-lg">
+      <!-- Titulo -->
+      <h1 class="text-4xl font-bold text-center m-8">Agenda de contato</h1>
+
+      <!-- Formulário principal -->
+      <form id="form-agenda" class="space-y-4 mb-8">
+        <div class="grid gird-cols-1 md:grid-cols-3 gap-4">
+          <!-- Nome: -->
+          <div>
+            <label for="nome" class="block text-sm font-medium">Nome:</label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
+            />
+          </div>
+          <!-- Endereço -->
+          <div>
+            <label for="endereco" class="block text-sm font-medium"
+              >Endereço:</label
+            >
+            <input
+              type="text"
+              id="endereco"
+              name="endereco"
+              class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
+            />
+          </div>
+          <!-- Telefone -->
+          <div>
+            <label for="telefone" class="block text-sm font-medium"
+              >Telefone:</label
+            >
+            <input
+              type="text"
+              id="telefone"
+              name="telefone"
+              class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
+            />
+          </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="flex justify-center">
+          <!-- Botão de cadastrar -->
+          <button
+            type="button"
+            onclick="cadastrar()"
+            class="mx-6 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-indigo-300"
+          >
+            Cadastrar
+          </button>
+
+          <!-- Botão de ordenar -->
+          <button
+            type="button"
+            onclick="ordenar()"
+            class="mx-6 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-indigo-300"
+          >
+            Ordenar
+          </button>
+        </div>
+      </form>
+
+      <!-- Tabela com os contatos, atualizados automaticamente a cada inserção -->
+      <div>
+        <h2 class="text-2xl font-semibold mb-4">Lista de contatos</h2>
+
+        <table class="min-w-full table-auto bg-gray-600 rounded-lg">
+          <thead>
+            <tr class="bg-gray-500 text-left">
+              <th class="px-4 py-2">Nome</th>
+              <th class="px-4 py-2">Endereço</th>
+              <th class="px-4 py-2">Telefone</th>
+            </tr>
+          </thead>
+          <tbody id="contatos-lista" class="divide-y divide-gray-500">
+            <!-- Aqui serão inseridos os contatos -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      var nome = [];
+      var endereco = [];
+      var telefone = [];
+
+      function cadastrar() {
+        // a) Cadastrar os 10 registros.
+        const limite = 10;
+
+        // Verifica o limite
+        if (nome.length >= limite) {
+          alert(
+            "Limite de 10 contatos foi atingido! Não é possível adicionar mais"
+          );
+          // TODO: Botão de remover
+          return;
+        }
+
+        // Capturar os valores dos campos
+        let nomeForm = document.getElementById("nome").value;
+        let enderecoForm = document.getElementById("endereco").value;
+        let telefoneForm = document.getElementById("telefone").value;
+
+        // TO Implement: regex para validar o telefone
+        // let regexTelefone = /^\d{2}\d{4,5}\d{4}$/;
+        // 11 99999-9999, \d = [0-9], {n} = n vezes repetido, {n,m} = n até m vezes repetido
+
+        // Verifica se todos os campos foram preenchidos
+        if (nomeForm === "" || enderecoForm === "" || telefoneForm === "") {
+          alert("Por favor, preencha todos os campos.");
+          return;
+        }
+
+        // Adicionar os valores aos arrays
+        nome.push(nomeForm);
+        endereco.push(enderecoForm);
+        telefone.push(telefoneForm);
+
+        // Atualizar a tabela
+        let table = document.getElementById("contatos-lista");
+        let newRow = table.insertRow(-1);
+        let cell1 = newRow.insertCell(0);
+        let cell2 = newRow.insertCell(1);
+        let cell3 = newRow.insertCell(2);
+
+        // Inserir o último valor adicionado ao array (o novo contato)
+        cell1.innerHTML = nomeForm;
+        cell2.innerHTML = enderecoForm;
+        cell3.innerHTML = telefoneForm;
+
+        // Limpar os campos
+        document.getElementById("nome").value = "";
+        document.getElementById("endereco").value = "";
+        document.getElementById("telefone").value = "";
+
+        // Exibir mensagem de sucesso
+        alert("Contato cadastrado com sucesso!");
+        alert(nome.length);
+      }
+
+      function ordenar() {
+        // Capturar a tabela
+        let table = document.getElementById("contatos-lista");
+
+        // Criar um array para armazenar as linhas da tabela
+        let rows = Array.from(table.rows); // Array.from constroi uma array
+
+        // Remover o cabeçalho da tabela do array, se houver
+        rows.shift();
+
+        // Ordenar as linhas com base na primeira célula (nome)
+        rows.sort((a, b) => {
+          // Obter o texto da primeira célula (nome) de cada linha e convertê-lo para minúsculas
+          let nomeA = a.cells[0].innerText.toLowerCase();
+          let nomeB = b.cells[0].innerText.toLowerCase();
+          
+          // Comparar os nomes para determinar a ordem
+          if (nomeA < nomeB) return -1; // nomeA vem antes de nomeB
+          if (nomeA > nomeB) return 1;  // nomeA vem depois de nomeB
+          return 0; // nomes são iguais
+        });
+
+        // Remover todas as linhas da tabela atual
+        while (table.rows.length > 1) {
+          table.deleteRow(1);
+        }
+
+        // Reinsere as linhas ordenadas na tabela, row que foi ordenada anteriormente
+        rows.forEach((row) => table.appendChild(row)); 
+      }
+
+    </script>
+  </body>
+</html>

@@ -13,11 +13,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body
-    class="bg-gray-800 text-white min-h-screen flex flex-col items-center justify-center"
+    class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center"
   >
+    <!-- min-h-screen garante que a tela tenha a mesma altura que a tela -->
+
     <!-- Junto desses exercícios, quero também explorar o Tailwind diretamente pelo script.
   Tenho ciencia que o Tailwind é uma ferramenta de desenvolvimento, mas quero ver se consigo fazer isso funcionar e
-  que o, colocar o framework diretamente no script não é uma das melhores práticas. Porém, quero ver se consigo fazer isso funcionar.
+  que, colocar o framework diretamente no script não é uma das melhores práticas.
+  Porém, quero ver se consigo fazer isso dar certo.
 -->
 
     <!-- Texto principal de boas vindas ao usuário -->
@@ -27,7 +30,54 @@
       </h1>
       <p class="text-xl">Selecione um exercício abaixo para começar.</p>
     </header>
+    <!-- Seção com os exercícios -->
+    <section
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl w-full px-4"
+    >
+      <!-- Por que 3 grids? No Tailwind podemos definir as colunas em breakpoints para mobile,
+     telas médias e telas grandes, consecutivamente. Tornadno assim, o site mais responsivo -->
 
-     </section>
+      <!-- Exercício 1 -->
+      <a href="exercicios\1.htm" class="block transform transition-transform hover:scale-105">
+        <div class="bg-gray-800 rounded-lg p-6 flex flex-col items-center">
+          <div class="w-full h-32 bg-gray-600 mb-4">
+            <!-- Espaço para a imagem -->
+            <!-- Imagem será inserida aqui futuramente -->
+          </div>
+          <h2 class="text-2xl font-semibold">Agenda</h2>
+        </div>
+      </a>
+      <!-- Exercício 2 -->
+      <a href="" class="block transform transition-transform hover:scale-105">
+        <div class="bg-gray-800 rounded-lg p-6 flex flex-col items-center">
+          <div class="w-full h-32 bg-gray-600 mb-4">
+            <!-- Espaço para a imagem -->
+            <!-- Imagem será inserida aqui futuramente -->
+          </div>
+          <h2 class="text-2xl font-semibold">Qual a nota?</h2>
+        </div>
+      </a>
+      <!-- Exercício 3 -->
+      <a href="" class="block transform transition-transform hover:scale-105">
+        <div class="bg-gray-800 rounded-lg p-6 flex flex-col items-center">
+          <div class="w-full h-32 bg-gray-600 mb-4">
+            <!-- Espaço para a imagem -->
+            <!-- Imagem será inserida aqui futuramente -->
+          </div>
+          <h2 class="text-2xl font-semibold">Nome e Altura</h2>
+        </div>
+      </a>
+      <!-- Exercício 4 -->
+      <a href="" class="block transform transition-transform hover:scale-105">
+        <div class="bg-gray-800 rounded-lg p-6 flex flex-col items-center">
+          <div class="w-full h-32 bg-gray-600 mb-4">
+            <!-- Espaço para a imagem -->
+            <!-- Imagem será inserida aqui futuramente -->
+          </div>
+          <h2 class="text-2xl font-semibold">Funcionários</h2>
+        </div>
+      </a>
+    </section>
+    <!-- Fim da seção -->
   </body>
 </html>
