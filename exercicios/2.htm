@@ -6,15 +6,210 @@
 (\|||/) Made by GustavG
 -->
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Qual a nota?</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body
-  class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center"
->
-    
-</body>
+  </head>
+  <!-- 2- Qual a nota?
+Considerando a necessidade de um programa que armazene o nome e as notas bimestrais de 20 alunos 
+do curso de Técnicas de Programação, defina a estrutura de registro apropriada, 
+o diagrama de blocos e a codificação de um programa que, 
+por meio do uso de um menu de opções, execute as seguintes etapas:
+
+a) Cadastrar os 20 registros (após o cadastro efetuar a classificação por nome).
+b) Pesquisar os 20 registros, de cada vez, pelo campo nome. Nesta pesquisa o programa deverá
+também apresentar a média do aluno e as mensagens: “Aprovado” caso sua média seja maior ou
+igual a 5, ou “Reprovado” para média abaixo de 5.
+c) Apresentar todos os registros, médias e a mensagem de aprovação ou reprovação.
+d) Sair do programa de cadastro. -->
+
+  <!-- Vou fazer esse programa um pouco mais simples em comparação ao anterior,
+ porém fica ai melhorias a se fazer. -->
+  <body
+    class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center"
+  >
+    <!-- Container principal -->
+    <div class="max-w-4xl w-full p-8 bg-gray-800 rounded-lg shadow-lg">
+      <!-- Titulo -->
+      <h1 class="text-4xl font-bold text-center mb-8" tabindex="0">
+        Notas de alunos
+      </h1>
+
+      <!-- Formulário principal -->
+      <form
+        id="form-notas"
+        class="space-y-4 mb-8"
+        aria-labelledby="form-title"
+        role="form"
+      >
+        <div id="form-title" class="sr-only">
+          Formulário de notas dos alunos
+        </div>
+        <!-- sr-only => Screen Reader only! Esconde do usuário padrão e mostra pra leitores de tela. -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Nome: -->
+          <div>
+            <label
+              for="nome"
+              class="block text-sm font-medium"
+              aria-label="Nome do aluno"
+              >Nome:</label
+            >
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
+              placeholder="Insira o nome do aluno"
+              required
+            />
+          </div>
+          <!-- Nota 1 -->
+          <div>
+            <label
+              for="nota1"
+              class="block text-sm font-medium"
+              aria-label="Nota 1 do aluno"
+              >Nota 1:</label
+            >
+            <input
+              type="number"
+              id="nota1"
+              name="nota1"
+              class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
+              placeholder="Insira a 1ª nota"
+              min="0"
+              max="10"
+              step="0.1"
+              required
+            />
+          </div>
+          <!-- Nota 2 -->
+          <div>
+            <label
+              for="nota2"
+              class="block text-sm font-medium"
+              aria-label="Nota 2 do aluno"
+              >Nota 2:</label
+            >
+            <input
+              type="number"
+              id="nota2"
+              name="nota2"
+              class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
+              placeholder="Insira a 2ª nota"
+              min="0"
+              max="10"
+              step="0.1"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="flex justify-center space-x-5 mt-4">
+          <button
+            type="button"
+            onclick="cadastrar()"
+            class="px-6 py-2 bg-green-500 hover:bg-green-600 rounded-md text-white font-semibold focus:outline-none focus:ring focus:ring-green-300"
+            aria-label="Cadastrar aluno"
+          >
+            Cadastrar
+          </button>
+          <button
+            type="button"
+            onclick="pesquisa()"
+            class="px-6 py-2 bg-blue-500 hover:bg-blue-600 rounded-md text-white font-semibold focus:outline-none focus:ring focus:ring-blue-300"
+            aria-label="Pesquisar aluno"
+          >
+            Pesquisar
+          </button>
+          <button
+            type="button"
+            onclick="registros()"
+            class="px-6 py-2 bg-purple-500 hover:bg-purple-600 rounded-md text-white font-semibold focus:outline-none focus:ring focus:ring-purple-300"
+            aria-label="Exibir registros"
+          >
+            Exibir registros
+          </button>
+        </div>
+      </form>
+
+      <!-- Resultado -->
+      <div id="resultado" class="space-y-4" role="status"></div>
+    </div>
+
+    <!-- Lógica JavaScript -->
+    <script>
+      // Array de alunos
+      var alunos = [];
+
+      // Função para cadastrar um aluno
+      function cadastrar() {
+        var nome = document.getElementById("nome").value;
+        var nota1 = parseFloat(document.getElementById("nota1").value);
+        var nota2 = parseFloat(document.getElementById("nota2").value);
+
+        if (nome && !isNaN(nota1) && !isNaN(nota2)) {
+          var media = (nota1 + nota2) / 2;
+          var status = media >= 5 ? "Aprovado" : "Reprovado"; // Função que verifica true ou false
+
+          // Adiciona o aluno ao array
+          alunos.push({
+            Nome: nome,
+            Nota_Media: media.toFixed(2),
+            Status: status,
+          });
+
+          alert("Aluno cadastrado com sucesso!");
+          limparFormulario(); // Limpa os campos após o cadastro
+        } else {
+          alert("Por favor, preencha todos os campos corretamente.");
+        }
+      }
+
+      // Função para pesquisar um aluno pelo nome
+      function pesquisa() {
+        let nome = prompt("Digite o nome do aluno a ser encontrado:")
+
+        if (nome) {
+          var alunoEncontrado = alunos.find(
+            (aluno) => aluno.Nome.toLowerCase() === nome.toLowerCase()
+          );
+
+          if (alunoEncontrado) {
+            alert(
+              `Nome: ${alunoEncontrado.Nome}\nMédia: ${alunoEncontrado.Nota_Media}\nStatus: ${alunoEncontrado.Status}`
+            );
+          } else {
+            alert("Aluno não encontrado.");
+          }
+        } else {
+          alert("Por favor, insira o nome do aluno para pesquisa.");
+        }
+      }
+
+      // Função para exibir todos os registros dos alunos
+      function registros() {
+        if (alunos.length > 0) {
+          alunos.forEach((aluno) => {
+            alert(
+              `Nome: ${aluno.Nome}\nMédia: ${aluno.Nota_Media}\nStatus: ${aluno.Status}`
+            );
+          });
+        } else {
+          alert("Não há registros de alunos.");
+        }
+      }
+
+      // Função para limpar os campos de entrada após cadastro
+      function limparFormulario() {
+        document.getElementById("nome").value = "";
+        document.getElementById("nota1").value = "";
+        document.getElementById("nota2").value = "";
+      }
+    </script>
+  </body>
 </html>
