@@ -113,6 +113,17 @@ e) Sair do programa de cadastro. (fiz sem a necessidade)-->
       </div>
     </div>
 
+    <!-- Botão de voltar ao index -->
+    <div class="flex justify-center mt-6">
+      <a
+        href="../index.htm"
+        class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-indigo-300"
+      >
+        Voltar ao Index
+      </a>
+    </div>
+
+    <!-- Começo da Lógica -->
     <script>
       var nome = [];
       var endereco = [];
@@ -127,7 +138,7 @@ e) Sair do programa de cadastro. (fiz sem a necessidade)-->
           alert(
             "Limite de 10 contatos foi atingido! Não é possível adicionar mais"
           );
-          // TODO: Botão de remover
+          // TODO: Botão de remover?
           return;
         }
 
@@ -188,10 +199,10 @@ e) Sair do programa de cadastro. (fiz sem a necessidade)-->
           // Obter o texto da primeira célula (nome) de cada linha e convertê-lo para minúsculas
           let nomeA = a.cells[0].innerText.toLowerCase();
           let nomeB = b.cells[0].innerText.toLowerCase();
-          
+
           // Comparar os nomes para determinar a ordem
           if (nomeA < nomeB) return -1; // nomeA vem antes de nomeB
-          if (nomeA > nomeB) return 1;  // nomeA vem depois de nomeB
+          if (nomeA > nomeB) return 1; // nomeA vem depois de nomeB
           return 0; // nomes são iguais
         });
 
@@ -201,9 +212,8 @@ e) Sair do programa de cadastro. (fiz sem a necessidade)-->
         }
 
         // Reinsere as linhas ordenadas na tabela, row que foi ordenada anteriormente
-        rows.forEach((row) => table.appendChild(row)); 
+        rows.forEach((row) => table.appendChild(row));
       }
-
     </script>
   </body>
 </html>
