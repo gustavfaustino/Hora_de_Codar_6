@@ -136,8 +136,8 @@ d) Sair do programa de cadastro. -->
           </button>
         </div>
       </form>
-
-      <!-- Botão de voltar ao index -->
+    </div>
+    <!-- Botão de voltar ao index -->
     <div class="flex justify-center mt-6">
       <a
         href="../index.htm"
@@ -145,10 +145,6 @@ d) Sair do programa de cadastro. -->
       >
         Voltar ao Index
       </a>
-    </div>
-      
-      <!-- Resultado -->
-      <div id="resultado" class="space-y-4" role="status"></div>
     </div>
 
     <!-- Lógica JavaScript -->
@@ -182,7 +178,7 @@ d) Sair do programa de cadastro. -->
 
       // Função para pesquisar um aluno pelo nome
       function pesquisa() {
-        let nome = prompt("Digite o nome do aluno a ser encontrado:")
+        let nome = prompt("Digite o nome do aluno a ser encontrado:");
 
         if (nome) {
           var alunoEncontrado = alunos.find(
