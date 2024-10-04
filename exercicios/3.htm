@@ -6,15 +6,239 @@
 (\|||/) Made by GustavG
 -->
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agenda</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body
-  class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center"
->
-    
-</body>
+  </head>
+
+  <body
+    class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center"
+  >
+    <!--     
+3 - Nome e Altura
+Elaborar um programa que armazene o nome e a altura de 15 pessoas,
+ por meio do uso de
+registros. O programa deverá ser manipulado por um menu que 
+execute as seguintes etapas:
+
+a) Cadastrar os 15 registros. FEITO
+b) Apresentar os registros (nome e altura) das pessoas menores ou iguais a 1.5m.
+c) Apresentar os registros (nome e altura) das pessoas que sejam maiores que 1.5m.
+d) Apresentar os registros (nome e altura) das pessoas que sejam maiores que 1.5m 
+e menores que
+2.0m.
+e) Apresentar a média extraída de todas as alturas armazenadas. FEITO
+f) Sair do programa. NÃO NECESSÁRIO, ao inves fiz a volta ao hub -->
+
+    <!-- Container principal -->
+    <div class="max-w-4xl w-full p-6 bg-gray-800 rounded-lg shadow-lg">
+      <!-- Titulo -->
+      <h1 class="text-4xl font-bold text-center m-8">Nome e Altura</h1>
+
+      <!-- Formulário principal -->
+      <div class="space-y-4 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Nome: -->
+          <div>
+            <label for="nome" class="block text-sm font-medium">Nome:</label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              placeholder="Digite o nome aqui"
+              class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
+            />
+          </div>
+          <!-- Altura -->
+          <div>
+            <label for="altura" class="block text-sm font-medium"
+              >Altura em metros:</label
+            >
+            <input
+              type="text"
+              id="altura"
+              name="altura"
+              placeholder="Digite a altura em metros"
+              class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
+            />
+          </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="flex justify-center space-x-5 mt-4">
+          <button
+            onclick="cadastrar()"
+            class="py-2 px-4 bg-indigo-500 rounded-md text-white font-medium hover:bg-indigo-600"
+          >
+            Cadastrar
+          </button>
+          <button
+            onclick="mediaGeral()"
+            class="py-2 px-4 bg-amber-500 rounded-md text-white font-medium hover:bg-amber-600"
+          >
+            Média Geral
+          </button>
+        </div>
+
+        <!-- Registros especiais -->
+        <div class="flex justify-center space-x-5 mt-4">
+          <button
+            onclick="baixos()"
+            class="py-2 px-4 bg-rose-500 rounded-md text-white font-medium hover:bg-rose-600"
+          >
+            Pessoas Menores que 1.5m
+          </button>
+          <button
+            onclick="altos()"
+            class="py-2 px-4 bg-rose-500 rounded-md text-white font-medium hover:bg-rose-600"
+          >
+            Pessoas maiores que 1.5m
+          </button>
+          <button
+            onclick="medios()"
+            class="py-2 px-4 bg-rose-500 rounded-md text-white font-medium hover:bg-rose-600"
+          >
+            Pessoas maiores que 1.5m e menores que 2m
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Botão de voltar ao index -->
+    <div class="flex justify-center mt-6">
+      <a
+        href="../index.htm"
+        class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-indigo-300"
+      >
+        Voltar ao Index
+      </a>
+    </div>
+
+    <!-- Início lógica JavaScript -->
+    <script>
+      var pessoas = [];
+
+      function cadastrar() {
+        // Atribuição de valores
+        var nome = document.getElementById("nome").value;
+        var altura = parseFloat(document.getElementById("altura").value);
+
+        // Validações
+        if (pessoas.length >= 15) {
+          alert("Limite de pessoas atingido");
+          return;
+        }
+
+        if (!nome) {
+          alert("Nome não informado");
+          return;
+        }
+
+        if (isNaN(altura)) {
+          alert("Altura inválida");
+          return;
+        }
+
+        if (altura <= 0.0 || altura > 2.5) {
+          alert("Altura inválida, informe um valor entre 0.0 e 2.50!");
+          return;
+        }
+
+        // Se tudo está válido, adiciona a pessoa
+        pessoas.push({ Nome: nome, Altura: altura });
+
+        alert("Pessoa cadastrada com sucesso!");
+        limpaFormulario();
+        console.log(pessoas); // Verificação pelo console
+      }
+
+      function mediaGeral() {
+        if (pessoas.length > 0) {
+          // Reinicializa a soma de alturas para evitar acumulação
+          var somaAlturas = 0;
+          // Calcula a média
+          pessoas.forEach((pessoa) => {
+            somaAlturas += pessoa.Altura;
+          });
+          // Exibe a média
+          var media = somaAlturas / pessoas.length;
+          alert(
+            "A média de altura de todas as pessoas é:\n" + media.toFixed(2)
+          );
+        } else {
+          alert("Não há alturas registradas.");
+        }
+      }
+
+      function baixos() {
+        if (pessoas.length > 0) {
+          // Recebendo pessoas <1.5 com o uso do filter, que filtra obviamente
+          /* Faz o mesmo da função anterior, filtra dentro da array pessoas as
+          possuem altura entre 1.5m e 2m e cria um novo array de acordo com os parametros.
+          Ou seja, novaArray = filter(parametros) se retornar true => cria uma array nova.
+          */
+          const pessoasBaixas = pessoas.filter(
+            (pessoa) => pessoa.Altura <= 1.5
+          );
+          console.log(pessoasBaixas); // Verificação pessoal
+
+          if (pessoasBaixas.length > 0) {
+            // Exibe o registro dessas pessoas com <1.5
+
+            /* Já no forEach, ele verifica cada elemento de um array e conduz a função dada em cada um.
+         Diferente do filter ele não cria um array, apenas verifica cada elemento individualmente. 
+         */
+            pessoasBaixas.forEach((pessoa) => {
+              alert("Nome: " + pessoa.Nome + "\nAltura: " + pessoa.Altura);
+            });
+          } else {
+            alert("Não há pessoas com altura menor que 1.5m registradas.");
+          }
+        } else {
+          alert("Não há alturas registradas.");
+        }
+      }
+
+      function medios() {
+        if (pessoas.length > 0) {
+        // Filtra as pessoas com altura > 1.5 e < 2.0
+        const pessoasMedias = pessoas.filter(pessoa => pessoa.Altura > 1.5 && pessoa.Altura < 2.0);
+
+        if (pessoasMedias.length > 0) {
+            // Exibe os registros das pessoas médias
+            pessoasMedias.forEach(pessoa => {
+                alert("Nome: " + pessoa.Nome + "\nAltura: " + pessoa.Altura);
+            });
+        } else {
+            alert("Não há pessoas com altura entre 1.5m e 2.0m registradas.");
+        }
+    } else {
+        alert("Não há pessoas registradas.");
+    }
+      }
+
+      function altos() {
+        if (pessoas.length > 0) {
+          const pessoasAltas = pessoas.filter((pessoa) => pessoa.Altura > 1.5);
+          console.log(pessoasAltas); // Verificação pessoal
+
+          if (pessoasAltas.length > 0) {
+            pessoasAltas.forEach((pessoa) => {
+              alert("Nome: " + pessoa.Nome + "\nAltura: " + pessoa.Altura);
+            });
+          } else {
+            alert("Não há pessoas com altura maior que 1.5m registradas.");
+          }
+        } else {
+          alert("Não há alturas registradas.");
+        }
+      }
+
+      function limpaFormulario() {
+        document.getElementById("nome").value = "";
+        document.getElementById("altura").value = "";
+      }
+    </script>
+  </body>
 </html>
