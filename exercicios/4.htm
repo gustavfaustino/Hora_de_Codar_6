@@ -6,15 +6,275 @@
 (\|||/) Made by GustavG
 -->
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Funcionários</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body
-  class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center"
->
-    
-</body>
+  </head>
+  <!-- 
+4 - Funcionários
+Considerando os registros de 20 funcionários, contendo os campos: matrícula, nome e salário,
+desenvolver um programa que, por meio de um menu, execute as seguintes etapas:
+
+a) Cadastrar os 20 empregados e classificar os registros por número de matrícula. FEITO
+b) Pesquisar um determinado empregado pelo número de matrícula.
+c) Apresentar de forma ordenada (por matrícula) os registros dos empregados que recebem salários
+acima de R$1.000,00.
+d) Apresentar de forma ordenada (por matrícula) os registros dos empregados que recebem salários
+abaixo de R$1.000,00.
+e) Apresentar de forma ordenada (por matrícula) os registros dos empregados que recebem salários
+iguais a R$1.000,00.
+f) Sair do programa. - Novamente, sem uso, ao inves disso o botão de volta ao HUB -->
+  <body
+    class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center"
+  >
+    <!-- Container principal -->
+    <div class="max-w-4xl w-full p-6 bg-gray-800 rounded-lg shadow-lg">
+      <!-- Titulo -->
+      <h1 class="text-4xl font-bold text-center m-8">Funcionários</h1>
+
+      <!-- Formulário principal -->
+      <div class="space-y-4 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+          <!-- Matrícula: -->
+          <div>
+            <label for="matricula" class="block text-sm font-medium"
+              >Matrícula:</label
+            >
+            <input
+              type="number"
+              id="matricula"
+              name="matricula"
+              placeholder="Digite a matrícula aqui"
+              class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
+            />
+          </div>
+          <!-- Nome: -->
+          <div>
+            <label for="nome" class="block text-sm font-medium">Nome:</label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              placeholder="Digite o nome aqui"
+              class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
+            />
+          </div>
+          <!-- Salário: -->
+          <div>
+            <label for="salario" class="block text-sm font-medium"
+              >Salário:</label
+            >
+            <input
+              type="number"
+              id="salario"
+              name="salario"
+              placeholder="Digite o salário aqui"
+              class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
+            />
+          </div>
+        </div>
+        <!-- Botão de enviar -->
+        <div class="flex justify-center space-x-5 mt-4">
+          <button
+            class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-md"
+            onclick="cadastrar()"
+          >
+            Cadastrar
+          </button>
+          <button
+            onclick="pesquisa()"
+            class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-md"
+          >
+            Pesquisar
+          </button>
+        </div>
+        <!-- Botões de registros especiais -->
+        <div class="flex justify-center space-x-2 pt-4">
+          <button
+            onclick="salarioBaixo()"
+            class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-md"
+          >
+            Funcionários com salário menor que R$1.000,00
+          </button>
+          <button
+            onclick="salarioIgual()"
+            class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-md"
+          >
+            Funcionários com salário igual a R$1.000,00
+          </button>
+          <button
+            onclick="salarioAlto()"
+            class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-md"
+          >
+            Funcionários com salário maior que R$1.000,00
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Botão de voltar ao index -->
+    <div class="flex justify-center mt-6">
+      <a
+        href="../index.htm"
+        class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-indigo-300"
+      >
+        Voltar ao Index
+      </a>
+    </div>
+
+    <!-- Começo da lógica em JavaScript -->
+    <script>
+      var funcionarios = [];
+      function cadastrar() {
+        // Coleta de dados
+        var matricula = parseInt(document.getElementById("matricula").value);
+        var nome = document.getElementById("nome").value;
+        var salario = parseFloat(document.getElementById("salario").value);
+
+        // Verificações
+        if (funcionarios.length >= 15) {
+          alert("Limite de pessoas atingido");
+          return;
+        }
+
+        if (!nome) {
+          alert("Nome não informado");
+          return;
+        }
+
+        if (isNaN(matricula) || matricula <= 0) {
+          alert("Número de matrícula inválida");
+          return;
+        }
+        if (isNaN(salario) || salario < 0) {
+          alert("Valor de salário inválido");
+          return;
+        }
+
+        // Verifica se já existe algum funcionário com matrícula igual
+        if (
+          funcionarios.some(
+            (funcionario) => funcionario.Matricula === matricula
+          )
+        ) {
+          alert(`Já existe um funcionário com a matrícula ${matricula}`);
+          return;
+        }
+
+        // Adiciona ao array
+        funcionarios.push({
+          Matricula: matricula,
+          Nome: nome,
+          Salário: salario,
+        });
+
+        // Ordena por matrícula
+        funcionarios.sort((a, b) => a.Matricula - b.Matricula); // Ordena por matrícula crescente, a - b = crescente, b - a = decrescente
+        console.log(funcionarios); // Exibe no console, verificação pessoal
+
+        // Mensagem de sucesso
+        alert("Funcionário cadastrado com sucesso!");
+
+        // Limpa o formulário
+        limpaFormulario();
+      }
+
+      //  b) Pesquisar um determinado empregado pelo número de matrícula.
+      function pesquisa() {
+        let pesquisado = parseInt(
+          prompt("Digite o número de matrícula do funcionário")
+        );
+
+        if (funcionarios.length > 0) {
+          if (pesquisado) {
+            var funcionarioEncontrado = funcionarios.find(
+              (funcionario) => funcionario.Matricula === pesquisado
+            );
+
+            if (funcionarioEncontrado) {
+              alert(`
+                  Matrícula: ${funcionarioEncontrado.Matricula}\n
+                  Nome: ${funcionarioEncontrado.Nome}\n
+                  Salário: R$${funcionarioEncontrado.Salário.toFixed(2)}
+                  `);
+            } else {
+              alert("Funcionário não encontrado!");
+            }
+          } else {
+            alert("Por favor, insira um número de matrícula válido!");
+          }
+        } else {
+          alert("Não há funcionários registrados");
+        }
+      }
+
+      function salarioBaixo() {
+        if (funcionarios.length > 0) {
+          const SALARIOBAIXO = funcionarios.filter(
+            (funcionario) => funcionario.Salário < 1000
+          );
+          console.log(SALARIOBAIXO); // Verificação pessoal no console
+
+          if (SALARIOBAIXO.length > 0) {
+            SALARIOBAIXO.forEach((funcionario) => {
+              alert(`Matrícula: ${funcionario.Matricula}\n
+                  Nome: ${funcionario.Nome}\n
+                  Salário: R$${funcionario.Salário.toFixed(2)}`);
+            });
+          } else {
+            alert("Não há funcionários com salário menor que R$1000.00!"); // Que benção, glória, sem escravidão
+          }
+        } else {
+          alert("Não há funcionários registrados");
+        }
+      }
+      function salarioIgual() {
+        if (funcionarios.length > 0) {
+          const SALARIOIGUAL = funcionarios.filter(
+            (funcionario) => funcionario.Salário === 1000
+          );
+          console.log(SALARIOIGUAL); // Verificação pessoal no console
+
+          if (SALARIOIGUAL.length > 0) {
+            SALARIOIGUAL.forEach((funcionario) => {
+              alert(`Matrícula: ${funcionario.Matricula}\n
+                  Nome: ${funcionario.Nome}\n
+                  Salário: R$${funcionario.Salário.toFixed(2)}`);
+            });
+          } else {
+            alert("Não há funcionários com salário menor que R$1000.00!"); // Que benção, glória, sem escravidão
+          }
+        } else {
+          alert("Não há funcionários registrados");
+        }
+      }
+      function salarioAlto() {
+        if (funcionarios.length > 0) {
+          const SALARIOALTO = funcionarios.filter(
+            (funcionario) => funcionario.Salário > 1000
+          );
+          console.log(SALARIOALTO); // Verificação pessoal no console
+
+          if (SALARIOALTO.length > 0) {
+            SALARIOALTO.forEach((funcionario) => {
+              alert(`Matrícula: ${funcionario.Matricula}\n
+                  Nome: ${funcionario.Nome}\n
+                  Salário: R$${funcionario.Salário.toFixed(2)}`);
+            });
+          } else {
+            alert("Não há funcionários com salário menor que R$1000.00!"); // Que benção, glória, sem escravidão
+          }
+        } else {
+          alert("Não há funcionários registrados");
+        }
+      }
+
+      function limpaFormulario() {
+        document.getElementById("nome").value = "";
+        document.getElementById("matricula").value = "";
+        document.getElementById("salario").value = "";
+      }
+    </script>
+  </body>
 </html>
